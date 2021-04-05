@@ -25,7 +25,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   static const double RADIUS_CORNER = 12;
   static const int NONE = 0;
   static const int VALUE_X = 1;
@@ -56,69 +55,64 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Container(constraints: BoxConstraints.expand(),
+        body: Container(
+            constraints: BoxConstraints.expand(),
             color: colorBackground,
             child: Center(
-                child: Column(mainAxisSize: MainAxisSize.min,
+                child:
+                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+              Text("Turn of player",
+                  style: TextStyle(
+                      fontSize: 36,
+                      color: colorTextCurrentTurn,
+                      fontWeight: FontWeight.bold)),
+              Icon(getIconFromStatus(currentTurn),
+                  size: 60, color: colorChannelIcon),
+              Container(
+                  margin: EdgeInsets.only(top: 12),
+                  decoration: BoxDecoration(
+                      color: colorBorder,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  padding: EdgeInsets.all(12),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text("Turn of player",
-                          style: TextStyle(
-                              fontSize: 36, color: colorTextCurrentTurn,
-                              fontWeight: FontWeight.bold)),
-                      Icon(getIconFromStatus(currentTurn), size: 60, color: colorChannelIcon),
-                      Container(
-                          margin: EdgeInsets.only(top: 12),
-                          decoration: BoxDecoration(
-                              color: colorBorder,
-                              borderRadius: BorderRadius.all(Radius.circular(8))),
-                          padding: EdgeInsets.all(12),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Row(mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: buildRowChannel(0)),
-                              Row(mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: buildRowChannel(1)),
-                              Row(mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: buildRowChannel(2))
-                            ],
-                          ))
-                    ])))
-    );
+                      Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: buildRowChannel(0)),
+                      Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: buildRowChannel(1)),
+                      Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: buildRowChannel(2))
+                    ],
+                  ))
+            ]))));
   }
 
   List<Widget> buildRowChannel(int row) {
-    List<Widget> listWidget = List();
+    List<Widget> listWidget = [];
     for (int col = 0; col < 3; col++) {
       double tlRadius = row == 0 && col == 0 ? RADIUS_CORNER : 0;
       double trRadius = row == 0 && col == 2 ? RADIUS_CORNER : 0;
       double blRadius = row == 2 && col == 0 ? RADIUS_CORNER : 0;
       double brRadius = row == 2 && col == 2 ? RADIUS_CORNER : 0;
-      Widget widget = buildChannel(
-          row,
-          col,
-          tlRadius,
-          trRadius,
-          blRadius,
-          brRadius,
-          channelStatus[row][col]);
+      Widget widget = buildChannel(row, col, tlRadius, trRadius, blRadius,
+          brRadius, channelStatus[row][col]);
       listWidget.add(widget);
     }
     return listWidget;
   }
 
-  Widget buildChannel(int row,
-      int col,
-      double tlRadius,
-      double trRadius,
-      double blRadius,
-      double brRadius,
-      int status) =>
-      GestureDetector(onTap: () => onChannelPressed(row, col),
+  Widget buildChannel(int row, int col, double tlRadius, double trRadius,
+          double blRadius, double brRadius, int status) =>
+      GestureDetector(
+          onTap: () => onChannelPressed(row, col),
           child: Container(
               margin: EdgeInsets.all(2),
               width: 100,
@@ -129,9 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       topLeft: Radius.circular(tlRadius),
                       topRight: Radius.circular(trRadius),
                       bottomLeft: Radius.circular(blRadius),
-                      bottomRight: Radius.circular(brRadius)
-                  )),
-              child: Icon(getIconFromStatus(status), size: 60, color: colorChannelIcon)));
+                      bottomRight: Radius.circular(brRadius))),
+              child: Icon(getIconFromStatus(status),
+                  size: 60, color: colorChannelIcon)));
 
   IconData getIconFromStatus(int status) {
     if (status == VALUE_X) {
@@ -159,9 +153,9 @@ class _MyHomePageState extends State<MyHomePage> {
         if (isGameEndedByWin()) {
           showEndGameDialog(currentTurn);
         } else {
-          if(isGameEndedByDraw()){
+          if (isGameEndedByDraw()) {
             showEndGameByDrawDialog();
-          }else {
+          } else {
             switchPlayer();
           }
         }
@@ -182,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isGameEndedByDraw() {
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < 3; col++) {
-        if(channelStatus[row][col] == NONE){
+        if (channelStatus[row][col] == NONE) {
           return false;
         }
       }
@@ -233,32 +227,33 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-            content: Column(mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text("The winner is", style: TextStyle(
-                      fontSize: 32,
-                      color: colorTextCurrentTurn,
-                      fontWeight: FontWeight.bold)),
-                  Icon(getIconFromStatus(currentTurn),
-                      size: 60,
-                      color: colorChannelIcon),
-                  RaisedButton(padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                    color: Colors.yellow[800],
-                    child: Text("Play again",
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      playAgain();
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ])
-        );
+            content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          Text("The winner is",
+              style: TextStyle(
+                  fontSize: 32,
+                  color: colorTextCurrentTurn,
+                  fontWeight: FontWeight.bold)),
+          Icon(getIconFromStatus(currentTurn),
+              size: 60, color: colorChannelIcon),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+                primary: Colors.yellow[800]),
+            child: Text("Play again",
+                style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold)),
+            onPressed: () {
+              playAgain();
+              Navigator.of(context).pop();
+            },
+          )
+        ]));
       },
     );
   }
+
   void showEndGameByDrawDialog() {
     // flutter defined function
     showDialog(
@@ -266,26 +261,28 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-            content: Column(mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text("Draw", style: TextStyle(
-                      fontSize: 32,
-                      color: colorTextCurrentTurn,
-                      fontWeight: FontWeight.bold)),
-                  RaisedButton(padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
-                    color: Colors.yellow[800],
-                    child: Text("Play again",
-                        style: TextStyle(
-                            fontSize: 22,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      playAgain();
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ])
-        );
+            content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+          Text("Draw",
+              style: TextStyle(
+                  fontSize: 32,
+                  color: colorTextCurrentTurn,
+                  fontWeight: FontWeight.bold)),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+              primary: Colors.yellow[800],
+            ),
+            child: Text("Play again",
+                style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold)),
+            onPressed: () {
+              playAgain();
+              Navigator.of(context).pop();
+            },
+          )
+        ]));
       },
     );
   }
