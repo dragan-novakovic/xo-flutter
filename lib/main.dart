@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'XO Game'),
+      home: MyHomePage(title: 'Iks Oks'),
     );
   }
 }
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Center(
                 child:
                     Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-              Text("Turn of player",
+              Text("Red",
                   style: TextStyle(
                       fontSize: 36,
                       color: colorTextCurrentTurn,
@@ -228,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // return object of type Dialog
         return AlertDialog(
             content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text("The winner is",
+          Text("Pobednik",
               style: TextStyle(
                   fontSize: 32,
                   color: colorTextCurrentTurn,
@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
                 primary: Colors.yellow[800]),
-            child: Text("Play again",
+            child: Text("Igraj opet",
                 style: TextStyle(
                     fontSize: 22,
                     color: Colors.white,
@@ -262,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // return object of type Dialog
         return AlertDialog(
             content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-          Text("Draw",
+          Text("Nereseno",
               style: TextStyle(
                   fontSize: 32,
                   color: colorTextCurrentTurn,
@@ -272,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.symmetric(horizontal: 18, vertical: 6),
               primary: Colors.yellow[800],
             ),
-            child: Text("Play again",
+            child: Text("Igraj opet",
                 style: TextStyle(
                     fontSize: 22,
                     color: Colors.white,
